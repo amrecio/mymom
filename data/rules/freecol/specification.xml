@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision$ -->
+<!--
+    *  Copyright (C) 2002-2012  The FreeCol Team
+    *
+    *  This file is part of FreeCol.
+    *
+    *  FreeCol is free software: you can redistribute it and/or modify
+    *  it under the terms of the GNU General Public License as published by
+    *  the Free Software Foundation, either version 2 of the License, or
+    *  (at your option) any later version.
+    *
+    *  FreeCol is distributed in the hope that it will be useful,
+    *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+    *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    *  GNU General Public License for more details.
+    *
+    *  You should have received a copy of the GNU General Public License
+    *  along with FreeCol.  If not, see <http://www.gnu.org/licenses/>.
+    *
+  -->
+<!-- specification version 0.64 -->
+<!-- in case of incompatible changes, please update version number and 
+     XSD schema for validation. -->
+<freecol-specification id="freecol" extends="classic">
+
+  <building-types>
+    <building-type id="model.building.stockade">
+      <modifier id="model.modifier.minimumColonySize" delete="true" />
+      <modifier id="model.modifier.minimumColonySize" type="additive" value="0"/>
+    </building-type>
+  </building-types>
+  <european-nation-types>
+    <european-nation-type id="model.nationType.naval" extends="model.nationType.default">
+      <modifier id="model.modifier.movementBonus" type="additive" value="3">
+        <scope ability-id="model.ability.navalUnit"/>
+      </modifier>
+      <unit id="ship" type="model.unit.merchantman"/>
+    </european-nation-type>
+    <european-nation-type id="model.nationType.building" extends="model.nationType.default">
+      <modifier id="model.goods.lumber" type="additive" value="2"/>
+      <modifier id="model.goods.hammers" type="additive" value="2">
+        <scope ability-id="model.ability.person" />
+      </modifier>
+      <unit id="pioneer" type="model.unit.expertLumberJack" role="pioneer"/>
+      <unit id="soldier" type="model.unit.masterCarpenter" role="soldier"/>
+    </european-nation-type>
+    <european-nation-type id="model.nationType.agriculture" extends="model.nationType.default">
+      <modifier id="model.goods.grain" type="additive" value="2"/>
+      <unit id="pioneer" type="model.unit.expertFarmer" role="pioneer"/>
+    </european-nation-type>
+    <european-nation-type id="model.nationType.furTrapping" extends="model.nationType.default">
+      <modifier id="model.goods.furs" type="additive" value="2"/>
+      <modifier id="model.goods.coats" type="additive" value="2"/>
+      <unit id="pioneer" type="model.unit.expertFurTrapper" role="pioneer"/>
+      <unit id="soldier" type="model.unit.masterFurTrader" role="soldier"/>
+    </european-nation-type>
+  </european-nation-types>
+
+  <nations>
+    <nation id="model.nation.portuguese"
+            nation-type="model.nationType.naval" selectable="true"
+            preferredLatitude="-16" ref="model.nation.portugueseREF"/>
+    <nation id="model.nation.swedish"
+            nation-type="model.nationType.building" selectable="true"
+            preferredLatitude="-39" ref="model.nation.swedishREF"/>
+    <nation id="model.nation.danish"
+            nation-type="model.nationType.agriculture" selectable="true"
+            preferredLatitude="-64" ref="model.nation.danishREF"/>
+    <nation id="model.nation.russian"
+            nation-type="model.nationType.furTrapping" selectable="true"
+            preferredLatitude="-55" startsOnEastCoast="false"
+            ref="model.nation.russianREF"/>
+    <nation id="model.nation.portugueseREF"
+            nation-type="model.nationType.ref"/>
+    <nation id="model.nation.swedishREF"
+            nation-type="model.nationType.ref"/>
+    <nation id="model.nation.danishREF"
+            nation-type="model.nationType.ref"/>
+    <nation id="model.nation.russianREF"
+            nation-type="model.nationType.ref"/>
+  </nations>
+
+  <options>
+    <optionGroup id="gameOptions">
+      <optionGroup id="gameOptions.map">
+        <!-- Enables/disables fog of war -->
+        <booleanOption id="model.option.fogOfWar" defaultValue="true"/>
+        <!-- Whether to award exploration points or not -->
+        <booleanOption id="model.option.explorationPoints" defaultValue="true"/>
+        <!-- The number of turns it takes to sail between Europe and the New World -->
+        <integerOption id="model.option.turnsToSail" defaultValue="3" minimumValue="1" maximumValue="10"/>
+        <!-- Whether amphibious moves are allowed. -->
+        <booleanOption id="model.option.amphibiousMoves" defaultValue="true"/>
+        <!-- Missionaries grant visibility and enhance trade and training -->
+        <booleanOption id="model.option.enhancedMissionaries"
+                       defaultValue="true"/>
+        <!-- Does the REF "teleport" to its first target or does it sail in. -->
+        <booleanOption id="model.option.teleportREF" defaultValue="false"/>
+      </optionGroup>
+      <optionGroup id="gameOptions.colony">
+        <!-- Does the Custom House sell boycotted goods -->
+        <booleanOption id="model.option.customIgnoreBoycott" defaultValue="false"/>
+        <!-- Whether experts have connections, producing without raw materials in factories -->
+        <booleanOption id="model.option.expertsHaveConnections" defaultValue="false"/>
+        <booleanOption id="model.option.saveProductionOverflow" defaultValue="false"/>
+        <!-- Whether to educate the least skilled unit first -->
+        <booleanOption id="model.option.allowStudentSelection" defaultValue="true"/>
+      </optionGroup>
+    </optionGroup>
+  </options>
+</freecol-specification>
